@@ -13,7 +13,7 @@ from utils.general import non_max_suppression_kpt, strip_optimizer, xyxy2xywh
 from utils.plots import output_to_keypoint, plot_one_box_kpt, colors
 
 @torch.no_grad()
-def run(poseweights="yolov7-w6-pose.pt", source="input_image.jpg", output_dir=".", device='cpu',
+def run(poseweights="yolov7-w6-pose.pt", source="./data_image/plank.jpg", output_dir=".", device='cpu',
         line_thickness=3, hide_labels=False, hide_conf=True):
 
     device = select_device(device)  # select device

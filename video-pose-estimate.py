@@ -41,16 +41,25 @@ def run(poseweights="yolov7-w6-pose.pt", source="football1.mp4", device='cpu', v
     frame_width = int(cap.get(3))  # get video frame width
     frame_height = int(cap.get(4))  # get video frame height
 
+    output_dir = "output"
+    if not os.path.exists(output_dir) :
+        os.makedirs(output_dir)
+
+    csv_output_dir = "output_csv"
+    if not os.path.exists(csv_output_dir) :
+        os.makedirs(csv_output_dir)
+    
+
     vid_write_image = letterbox(cap.read()[1], (frame_width), stride=64, auto=True)[0]  # init VideoWriter
     resize_height, resize_width = vid_write_image.shape[:2]
-    out_video_name = f"{source.split('/')[-1].split('.')[0]}"
-    out = cv2.VideoWriter(f"output_{source}.mp4",
+    out_video_name = f"{output_dir}/{source.split('/')[-1].split('.')[0]}.mp4"
+    out = cv2.VideoWriter(out_video_name,
                           cv2.VideoWriter_fourcc(*'mp4v'), 30,
                           (resize_width, resize_height))
 
     # 비디오 소스 이름에서 확장자를 제거하고 CSV 파일 이름 생성
     base_name = os.path.splitext(os.path.basename(source))[0]  # 파일 이름에서 경로 및 확장자 제거
-    csv_file_name = f'output_{base_name}.csv'  # CSV 파일 이름 생성
+    csv_file_name = f'{csv_output_dir}/{base_name}.csv'  # CSV 파일 이름 생성
 
     # CSV 파일 열기 (기존 파일이 있으면 덮어쓰고, 없으면 새로 생성)
     with open(csv_file_name, mode='w', newline='') as csvfile:

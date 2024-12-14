@@ -111,17 +111,21 @@ def run(poseweights="yolov7-w6-pose.pt", source="input_image.jpg", output_dir=".
     
     # output 폴더 경로 설정
     output_dir = os.path.join(current_directory, "output")
+    json_output_dir = os.path.join(current_directory, "output_json")
 
     # output 폴더가 존재하지 않으면 생성
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    output_image_name = os.path.join(output_dir, f"{base_name}_output.png")  # 저장 경로 및 이름 설정
+    if not os.path.exists(json_output_dir) :
+        os.makedirs(json_output_dir)
+
+    output_image_name = os.path.join(output_dir, f"{base_name}.jpg")  # 저장 경로 및 이름 설정
     cv2.imwrite(output_image_name, im0)  # 결과 이미지 저장
     print(f"Output image saved as {output_image_name}")
 
     # JSON 파일로 키포인트 저장
-    keypoints_json_name = os.path.join(output_dir, f"{base_name}_keypoints.json")  # JSON 파일 이름 설정
+    keypoints_json_name = os.path.join(json_output_dir, f"{base_name}.json")  # JSON 파일 이름 설정
     with open(keypoints_json_name, 'w') as json_file:
         json.dump(keypoints_data, json_file, indent=4)  # JSON 파일에 저장
     print(f"Keypoints saved as {keypoints_json_name}")
